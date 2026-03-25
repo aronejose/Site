@@ -276,6 +276,13 @@
                 font-size: 2rem;
             }
         }
+.logo-flex {
+    width: 150px; /* defina o tamanho que quiser */
+    height: auto;
+    margin-right: 20px; /* espaço entre logo e texto */
+    flex-shrink: 0; /* impede que o logo encolha */
+}
+        
         button, .btn-contact, .btn-hero {
             cursor: pointer;
         }
@@ -285,10 +292,15 @@
 
 <header>
     <div class="container header-flex">
-        <div class="logo">
+        <!-- <div class="logo">
             <h2><img src="IMG-20260325-WA0016.jpg"  style="width: 120px; height: auto;"></h2>
             <p>Excelência em betão e infraestruturas</p>
-        </div>
+        </div> -->
+<header style="display: flex; align-items: center;">
+    <img src="logo.png" alt="Logo" class="logo-flex">
+    <h1>Meu Site</h1>
+</header>
+        
         <nav>
             <ul>
                 <li><a href="#home">Início</a></li>
