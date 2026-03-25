@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> A2Z | Betão, Pavimentos e Habitações</title>
+    <!-- Font Awesome 6 (gratuito) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #2c3e2f;
+            line-height: 1.5;
+        }
+        /* Cores temáticas */
+        :root {
+            --primary: #d95b0e;    /* laranja construção */
+            --secondary: #2c5f2d;  /* verde escuro */
+            --dark: #1e2a2a;
+            --light: #f4f4f4;
+            --gray: #6c757d;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        /* HEADER */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            flex-wrap: wrap;
+        }
+        .logo h2 {
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+        .logo p {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        nav ul li a {
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+        /* Botão contacto */
+        .btn-contact {
+            background: var(--primary);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .btn-contact:hover {
+            background: #b84a0a;
+            color: white;
+        }
+        /* Hero */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://picsum.photos/id/104/1600/600') center/cover no-repeat;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        .btn-hero {
+            background: var(--primary);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 40px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            display: inline-block;
+            transition: 0.3s;
+        }
+        /* Seções */
+        section {
+            padding: 60px 0;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 40px;
+            color: var(--dark);
+            position: relative;
+        }
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: var(--primary);
+            margin: 12px auto 0;
+        }
+        /* Destaques (ficha técnica) */
+        .highlights {
+            background: var(--light);
+        }
+        .grid-highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+        .highlight-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+        .highlight-card:hover {
+            transform: translateY(-5px);
+        }
+        .highlight-card i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        .highlight-card h3 {
+            margin-bottom: 10px;
+        }
+        /* Serviços */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .service-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+        }
+        .service-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .service-card h3 {
+            background: var(--primary);
+            color: white;
+            padding: 12px;
+            margin: 0;
+        }
+        .service-card p {
+            padding: 15px;
+        }
+        /* Projetos */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .project-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+        .project-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .project-card .info {
+            padding: 20px;
+        }
+        .project-card h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        /* Galeria */
+        .gallery {
+            background: var(--light);
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: 0.3s;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: #ccc;
+            padding: 40px 0 20px;
+        }
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .footer-col {
+            flex: 1;
+            min-width: 200px;
+        }
+        .footer-col h4 {
+            color: white;
+            margin-bottom: 15px;
+        }
+        .footer-col i {
+            margin-right: 8px;
+            color: var(--primary);
+        }
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            font-size: 0.8rem;
+        }
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .header-flex {
+                flex-direction: column;
+                gap: 15px;
+            }
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+        button, .btn-contact, .btn-hero {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container header-flex">
+        <div class="logo">
+            <h2><i class="fas fa-hard-hat"></i> A2Z MOZAMBIQUE LDA</h2>
+            <p>Excelência em betão e infraestruturas</p>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home">Início</a></li>
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#servicos">Serviços</a></li>
+                <li><a href="#projetos">Projetos</a></li>
+                <li><a href="#galeria">Galeria</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+        <a href="#contacto" class="btn-contact">Orçamento <i class="fas fa-arrow-right"></i></a>
+    </div>
+</header>
+
+<main>
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <h1>Construindo o futuro com excelência</h1>
+            <p>Betoneira móvel com 30 m³/h | Bombeamento até 12 andares | Projetos de grande porte em Moatize</p>
+            <a href="#contacto" class="btn-hero">Solicite uma proposta <i class="fas fa-chevron-right"></i></a>
+        </div>
+    </section>
+
+    <!-- Destaques Técnicos (Betoneira, etc) -->
+    <section id="sobre" class="highlights">
+        <div class="container">
+            <h2 class="section-title">Potência e Mobilidade</h2>
+            <div class="grid-highlights">
+                <div class="highlight-card">
+                    <i class="fas fa-truck-mixer"></i>
+                    <h3>Betoneira Móvel</h3>
+                    <p>Produção de <strong>30 m³/h</strong> de betão, totalmente móvel para deslocação rápida no canteiro.</p>
+                </div>
+                <div class="highlight-card">
+                    <i class="fas fa-arrow-up"></i>
+                    <h3>Bombeamento até 12 Pisos</h3>
+                    <p>Lança ou bomba estacionária capaz de atingir <strong>12 andares</strong> de altura, ideal para edifícios.</p>
+                </div>
+                <div class="highlight-card">
+                    <i class="fas fa-gas-pump"></i>
+                    <h3>Energia Diesel</h3>
+                    <p>Operação robusta com motor a diesel, garantindo autonomia e potência em qualquer local.</p>
+                </div>
+                <div class="highlight-card">
+                    <i class="fas fa-cubes"></i>
+                    <h3>Produção de Pavês e Blocos</h3>
+                    <p>Equipa especializada na fabricação de pavimentos intertravados e blocos de alta resistência.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Serviços -->
+    <section id="servicos">
+        <div class="container">
+            <h2 class="section-title">Nossos Serviços</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <img src="https://picsum.photos/id/15/400/300" alt="Fornecimento de betão">
+                    <h3>Betão Usinado</h3>
+                    <p>Fornecimento e bombeamento de betão com qualidade controlada, inclusive para alturas até 12 pisos.</p>
+                </div>
+                <div class="service-card">
+                    <img src="https://picsum.photos/id/104/400/300" alt="Pavimentação">
+                    <h3>Pavimentação e Blocos</h3>
+                    <p>Fabricação própria de pavês e blocos de concreto, ideal para áreas externas e calçadas.</p>
+                </div>
+                <div class="service-card">
+                    <img src="https://picsum.photos/id/106/400/300" alt="Construção de casas">
+                    <h3>Construção Residencial</h3>
+                    <p>Execução de empreendimentos habitacionais, como as 200 casas do Vulcan Village em Moatize.</p>
+                </div>
+                <div class="service-card">
+                    <img src="https://picsum.photos/id/96/400/300" alt="Obras especiais">
+                    <h3>Monumentos e Infraestruturas</h3>
+                    <p>Construção de monumentos mineiros e obras de arte, com acabamento de excelência.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projetos em destaque -->
+    <section id="projetos" style="background: #f0f2f5;">
+        <div class="container">
+            <h2 class="section-title">Projetos em Execução</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <img src="https://picsum.photos/id/1/400/300" alt="Vulcan Village">
+                    <div class="info">
+                        <h3>Vulcan Village – Moatize</h3>
+                        <p>Construção de <strong>200 habitações</strong> para famílias, com infraestrutura completa e urbanização.</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Moatize, Tete</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="https://picsum.photos/id/106/400/300" alt="Monumento Mineiro">
+                    <div class="info">
+                        <h3>Monumento Mineiro</h3>
+                        <p>Homenagem à atividade mineira, estrutura em betão aparente com design contemporâneo.</p>
+                        <p><i class="fas fa-hard-hat"></i> Curso de entrada da Vulcan</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="https://picsum.photos/id/104/400/300" alt="Entrada Pavimentada">
+                    <div class="info">
+                        <h3>Entrada Pavimentada</h3>
+                        <p>Pavimentação da via de acesso principal no curso Vulcan, garantindo segurança e durabilidade.</p>
+                        <p><i class="fas fa-road"></i> Pavimentos em betão e blocos</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galeria de Imagens (9 imagens placeholder) -->
+    <section id="galeria" class="gallery">
+        <div class="container">
+            <h2 class="section-title">Galeria de Obras</h2>
+            <div class="gallery-grid">
+                <!-- 9 imagens placeholder; você pode substituir pelos seus arquivos -->
+                <div class="gallery-item"><img src="https://picsum.photos/id/101/400/300" alt="Betoneira em ação"></div>
+                <div class="gallery-item"><img src="https://picsum.photos/id/102/400/300" alt="Bombeamento de betão"></div>
+                <div class="gallery-item"><img src="https://picsum.photos/id/103/400/300" alt="Produção de blocos"></div>
+                <div class="gallery-item"><img src="https://picsum.photos/id/104/400/300" alt="Pavimentação"></div>
+                <div class="gallery-item"><img src="https://picsum.photos/id/105/400/300" alt="Frente de obra Vulcan Village"></div>
+                <div class="gallery-item"><img src="https://picsum.photos/id/106/400/300" alt="Construção de casas"></div>
+                <div class="gallery-item"><img src="https://picsum.photos/id/107/400/300" alt="Equipamentos e frota"></div>
+                <div class="gallery-item"><img src="https://picsum.photos/id/108/400/300" alt="Monumento mineiro"></div>
+                <div class="gallery-item"><img src="https://picsum.photos/id/116/400/300" alt="Entrada Vulcan pavimentada"></div>
+            </div>
+            <p style="text-align: center; margin-top: 20px; font-style: italic;">*Imagens ilustrativas – substitua pelas fotos reais dos seus projetos.</p>
+        </div>
+    </section>
+
+    <!-- Contacto / informação -->
+    <section id="contacto">
+        <div class="container">
+            <h2 class="section-title">Fale Connosco</h2>
+            <div style="display: flex; flex-wrap: wrap; gap: 40px; justify-content: center;">
+                <div style="flex:1; min-width: 250px;">
+                    <h3><i class="fas fa-phone-alt"></i> Telefone</h3>
+                    <p>+258 84 123 4567</p>
+                    <h3><i class="fas fa-envelope"></i> Email</h3>
+                    <p>vulcan.construcoes@email.com</p>
+                    <h3><i class="fas fa-map-marker-alt"></i> Localização</h3>
+                    <p>Curso de Entrada Vulcan, Moatize – Moçambique</p>
+                </div>
+                <div style="flex:2; min-width: 280px;">
+                    <form action="#" method="post">
+                        <input type="text" placeholder="Seu nome" style="width:100%; padding:12px; margin-bottom:12px; border:1px solid #ccc; border-radius:8px;">
+                        <input type="email" placeholder="Email" style="width:100%; padding:12px; margin-bottom:12px; border:1px solid #ccc; border-radius:8px;">
+                        <textarea rows="4" placeholder="Mensagem" style="width:100%; padding:12px; margin-bottom:12px; border:1px solid #ccc; border-radius:8px;"></textarea>
+                        <button type="submit" style="background: var(--primary); color:white; border:none; padding:12px 25px; border-radius:30px; font-weight:bold;">Enviar mensagem</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-col">
+                <h4>Vulcan Construções</h4>
+                <p>Especialistas em betão, pavimentos e construções de médio e grande porte. Compromisso com prazos e qualidade.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Serviços</h4>
+                <p><i class="fas fa-check"></i> Betão usinado 30 m³/h</p>
+                <p><i class="fas fa-check"></i> Bombeamento até 12 pisos</p>
+                <p><i class="fas fa-check"></i> Pavês e blocos</p>
+                <p><i class="fas fa-check"></i> Construção civil</p>
+            </div>
+            <div class="footer-col">
+                <h4>Contacto rápido</h4>
+                <p><i class="fas fa-phone"></i> +258 84 123 4567</p>
+                <p><i class="fas fa-envelope"></i> geral@vulcan.co.mz</p>
+                <p><i class="fas fa-clock"></i> Seg-Sex: 7h – 17h</p>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2025 Vulcan Construções – Todos os direitos reservados. | Desenvolvido para Moatize
+        </div>
+    </div>
+</footer>
+
+<!-- Pequeno script para rolagem suave -->
+<script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+</script>
+</body>
+</html>
