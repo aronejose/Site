@@ -2,481 +2,761 @@
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> A2Z | Betão, Pavimentos e Habitações</title>
-    <!-- Font Awesome 6 (gratuito) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>A2Z MOZAMBIQUE | Engenharia de Excelência</title>
+    <meta name="description" content="A2Z Moçambique: betão usinado, pavimentação, construção civil. Betoneira móvel 30 m³/h, bombeamento até 12 andares. Projetos em Moatize.">
+    <meta name="keywords" content="construção civil, betão, pavimentação, Moatize, Moçambique, A2Z">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
+        /* Mesmo CSS anterior, mas com algumas otimizações */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f8f9fa;
-            color: #2c3e2f;
-            line-height: 1.5;
+            font-family: 'Montserrat', sans-serif;
+            background-color: #0a0a0a;
+            color: #e0e0e0;
+            overflow-x: hidden;
         }
-        /* Cores temáticas */
-        :root {
-            --primary: #d95b0e;    /* laranja construção */
-            --secondary: #2c5f2d;  /* verde escuro */
-            --dark: #1e2a2a;
-            --light: #f4f4f4;
-            --gray: #6c757d;
-        }
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-        /* HEADER */
-        header {
-            background: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
+        .preloader {
+            position: fixed;
             top: 0;
-            z-index: 100;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s;
+        }
+        .preloader.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .loader {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(196, 30, 58, 0.2);
+            border-top: 4px solid #c41e3a;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @media (min-width: 1024px) {
+            .cursor-dot, .cursor-dot-outline {
+                pointer-events: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                border-radius: 50%;
+                z-index: 9999;
+                opacity: 0;
+                transition: opacity 0.2s;
+            }
+            .cursor-dot {
+                width: 6px;
+                height: 6px;
+                background-color: #c41e3a;
+                transform: translate(-50%, -50%);
+            }
+            .cursor-dot-outline {
+                width: 32px;
+                height: 32px;
+                background-color: rgba(196, 30, 58, 0.2);
+                border: 1px solid rgba(196, 30, 58, 0.6);
+                transform: translate(-50%, -50%);
+                transition: width 0.2s, height 0.2s;
+            }
+            body:hover .cursor-dot,
+            body:hover .cursor-dot-outline {
+                opacity: 1;
+            }
+        }
+        :root {
+            --primary: #c41e3a;
+            --primary-dark: #9a162c;
+            --gold: #d4af37;
+            --gold-dark: #b38f2a;
+            --dark: #050505;
+            --gray: #1e1e1e;
+            --card-bg: rgba(20, 20, 20, 0.85);
+            --glass-border: rgba(255,255,255,0.08);
+        }
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #111;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
         }
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 40px;
+        }
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            transition: all 0.4s ease;
+            background: transparent;
+        }
+        header.scrolled {
+            background: rgba(5, 5, 5, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(196,30,58,0.3);
+            padding: 12px 0;
         }
         .header-flex {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 0;
-            flex-wrap: wrap;
         }
         .logo h2 {
-            color: var(--primary);
             font-size: 1.8rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+        .logo span {
+            color: var(--primary);
         }
         .logo p {
-            font-size: 0.8rem;
-            color: var(--gray);
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            color: var(--gold);
         }
         nav ul {
             display: flex;
+            gap: 2.5rem;
             list-style: none;
-            gap: 25px;
         }
         nav ul li a {
             font-weight: 600;
+            color: #f0f0f0;
             transition: 0.3s;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
         }
         nav ul li a:hover {
             color: var(--primary);
         }
-        /* Botão contacto */
-        .btn-contact {
-            background: var(--primary);
+        .btn-orcamento {
+            background: linear-gradient(95deg, var(--primary), var(--primary-dark));
+            padding: 10px 28px;
+            border-radius: 40px;
+            font-weight: 700;
             color: white;
-            padding: 8px 20px;
-            border-radius: 30px;
-            font-weight: bold;
-            transition: 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 6px 14px rgba(196,30,58,0.4);
         }
-        .btn-contact:hover {
-            background: #b84a0a;
-            color: white;
+        .btn-orcamento:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 20px rgba(196,30,58,0.5);
         }
-        /* Hero */
+        .menu-toggle {
+            display: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--primary);
+        }
         .hero {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('build.jpeg') center/cover no-repeat; 
-            /* background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://picsum.photos/id/104/1600/600') center/cover no-repeat;  */
-            color: white;
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
-            padding: 100px 20px;
+            overflow: hidden;
+        }
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(0,0,0,0.5) 0%, #050505 95%);
+            z-index: -1;
+        }
+        .hero-content {
+            max-width: 900px;
+            padding: 0 20px;
+            z-index: 2;
         }
         .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
+            font-size: 4.8rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff, var(--gold));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
         .hero p {
             font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto 30px;
+            opacity: 0.9;
+            margin-bottom: 2rem;
         }
-        .btn-hero {
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn-primary {
             background: var(--primary);
-            color: white;
-            padding: 12px 30px;
-            border-radius: 40px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            display: inline-block;
+            padding: 14px 38px;
+            border-radius: 50px;
+            font-weight: 700;
             transition: 0.3s;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
         }
-        /* Seções */
+        .btn-outline {
+            border: 1px solid var(--gold);
+            padding: 14px 38px;
+            border-radius: 50px;
+            font-weight: 700;
+            background: transparent;
+            transition: 0.3s;
+            color: var(--gold);
+        }
+        .btn-outline:hover {
+            background: var(--gold);
+            color: #000;
+            border-color: var(--gold);
+        }
         section {
-            padding: 60px 0;
-        }
-        .section-title {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 40px;
-            color: var(--dark);
+            padding: 100px 0;
             position: relative;
         }
-        .section-title:after {
-            content: '';
-            display: block;
-            width: 80px;
-            height: 3px;
-            background: var(--primary);
-            margin: 12px auto 0;
-        }
-        /* Destaques (ficha técnica) */
-        .highlights {
-            background: var(--light);
-        }
-        .grid-highlights {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            text-align: center;
-        }
-        .highlight-card {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s;
-        }
-        .highlight-card:hover {
-            transform: translateY(-5px);
-        }
-        .highlight-card i {
+        .section-title {
             font-size: 3rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .section-title span {
             color: var(--primary);
-            margin-bottom: 15px;
         }
-        .highlight-card h3 {
-            margin-bottom: 10px;
+        .section-subtitle {
+            text-align: center;
+            color: #aaa;
+            max-width: 700px;
+            margin: 0 auto 60px auto;
+            font-size: 1.1rem;
         }
-        /* Serviços */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .stat-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 32px;
+            padding: 2rem;
+            text-align: center;
+            transition: 0.4s;
+        }
+        .stat-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(196,30,58,0.5);
+        }
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--gold);
+            line-height: 1;
+        }
+        .stat-label {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 0.5rem;
+        }
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
         }
         .service-card {
-            background: white;
-            border-radius: 12px;
+            background: var(--card-bg);
+            backdrop-filter: blur(8px);
+            border-radius: 28px;
             overflow: hidden;
-            box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+            border: 1px solid var(--glass-border);
+            transition: all 0.4s;
         }
-        .service-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-        .service-card h3 {
-            background: var(--primary);
-            color: white;
-            padding: 12px;
-            margin: 0;
-        }
-        .service-card p {
-            padding: 15px;
-        }
-        /* Projetos */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        .project-card {
-            background: white;
-            border-radius: 12px;
+        .service-img {
+            height: 260px;
             overflow: hidden;
-            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
         }
-        .project-card img {
+        .service-img img {
             width: 100%;
-            height: 200px;
+            height: 100%;
             object-fit: cover;
+            transition: transform 0.6s;
         }
-        .project-card .info {
-            padding: 20px;
+        .service-card:hover .service-img img {
+            transform: scale(1.08);
         }
-        .project-card h3 {
+        .service-content {
+            padding: 1.8rem;
+        }
+        .service-content h3 {
+            font-size: 1.7rem;
+            margin-bottom: 0.8rem;
             color: var(--primary);
-            margin-bottom: 10px;
         }
-        /* Galeria */
-        .gallery {
-            background: var(--light);
+        .projects-carousel {
+            padding: 40px 0;
+        }
+        .swiper-slide {
+            background: var(--card-bg);
+            border-radius: 28px;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .swiper-slide img {
+            width: 100%;
+            height: 380px;
+            object-fit: cover;
+        }
+        .project-info {
+            padding: 1.5rem;
+        }
+        .project-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .clients-carousel {
+            background: #0f0f0f;
+            padding: 60px 0;
+            border-top: 1px solid rgba(212,175,55,0.2);
+            border-bottom: 1px solid rgba(212,175,55,0.2);
+        }
+        .clients-slider .swiper-slide {
+            background: transparent;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: none;
+            border: none;
+        }
+        .clients-slider .swiper-slide img {
+            max-width: 180px;
+            max-height: 100px;
+            width: auto;
+            height: auto;
+            filter: brightness(0.8) grayscale(0.3);
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .clients-slider .swiper-slide img:hover {
+            filter: brightness(1) grayscale(0);
+            transform: scale(1.05);
+        }
+        .team-section {
+            text-align: center;
+        }
+        .team-image {
+            max-width: 100%;
+            border-radius: 32px;
+            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.5);
+            border: 2px solid var(--gold);
+            transition: 0.4s;
+            margin-top: 20px;
+        }
+        .team-image:hover {
+            transform: scale(1.02);
+            border-color: var(--primary);
         }
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
         }
         .gallery-item {
+            border-radius: 24px;
             overflow: hidden;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            transition: 0.3s;
+            position: relative;
+            cursor: pointer;
         }
         .gallery-item img {
             width: 100%;
-            height: 220px;
+            height: 280px;
             object-fit: cover;
-            transition: transform 0.3s;
+            transition: transform 0.5s;
         }
         .gallery-item:hover img {
             transform: scale(1.05);
         }
-        /* Footer */
-        footer {
-            background: var(--dark);
-            color: #ccc;
-            padding: 40px 0 20px;
-        }
-        .footer-content {
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            opacity: 0;
+            transition: 0.3s;
             display: flex;
-            justify-content: space-between;
+            align-items: center;
+            justify-content: center;
+        }
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        .contact-premium {
+            background: linear-gradient(145deg, #111, #050505);
+            border-radius: 48px;
+            padding: 3rem;
+            display: flex;
             flex-wrap: wrap;
-            gap: 30px;
-            margin-bottom: 30px;
+            gap: 3rem;
+            border: 1px solid rgba(212,175,55,0.2);
         }
-        .footer-col {
+        .contact-info {
             flex: 1;
-            min-width: 200px;
         }
-        .footer-col h4 {
-            color: white;
-            margin-bottom: 15px;
+        .contact-info h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--gold);
         }
-        .footer-col i {
-            margin-right: 8px;
+        .contact-detail {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1.2rem 0;
+        }
+        .contact-detail i {
+            font-size: 1.5rem;
             color: var(--primary);
         }
-        .copyright {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid #444;
-            font-size: 0.8rem;
+        .contact-form {
+            flex: 1.5;
         }
-        /* Responsivo */
-        @media (max-width: 768px) {
-            .header-flex {
-                flex-direction: column;
-                gap: 15px;
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 14px 20px;
+            border-radius: 40px;
+            color: white;
+            margin-bottom: 1rem;
+            transition: 0.3s;
+        }
+        .contact-form textarea {
+            border-radius: 28px;
+            resize: vertical;
+        }
+        .contact-form input:focus, .contact-form textarea:focus {
+            border-color: var(--gold);
+            outline: none;
+            box-shadow: 0 0 8px rgba(212,175,55,0.3);
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: 0.3s;
+            z-index: 99;
+            border: none;
+            font-size: 1.2rem;
+        }
+        .back-to-top.visible {
+            opacity: 1;
+        }
+        footer {
+            background: #030303;
+            padding: 50px 0 20px;
+            border-top: 1px solid rgba(196,30,58,0.2);
+        }
+        @media (max-width: 992px) {
+            .menu-toggle {
+                display: block;
+            }
+            nav {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - 80px);
+                background: #0a0a0a;
+                backdrop-filter: blur(20px);
+                transition: 0.3s;
+                padding: 2rem;
+                z-index: 999;
+            }
+            nav.active {
+                left: 0;
             }
             nav ul {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 15px;
+                flex-direction: column;
+                gap: 1.5rem;
             }
             .hero h1 {
+                font-size: 2.8rem;
+            }
+            .section-title {
                 font-size: 2rem;
             }
-        }
-.logo-flex {
-    width: 150px; /* defina o tamanho que quiser */
-    height: auto;
-    margin-right: 20px; /* espaço entre logo e texto */
-    flex-shrink: 0; /* impede que o logo encolha */
-    mix-blend-mode: multiply;
-}
-        
-        button, .btn-contact, .btn-hero {
-            cursor: pointer;
+            .container {
+                padding: 0 20px;
+            }
         }
     </style>
 </head>
 <body>
 
-<header>
+<div class="preloader">
+    <div class="loader"></div>
+</div>
+
+<div class="cursor-dot"></div>
+<div class="cursor-dot-outline"></div>
+
+<header id="header">
     <div class="container header-flex">
-        <!-- <div class="logo">
-            <h2><img src="IMG-20260325-WA0016.jpg"  style="width: 120px; height: auto;"></h2>
-            <p>Excelência em betão e infraestruturas</p>
-        </div> -->
-<header style="display: flex; align-items: center;">
-    <img src="IMG-20260325-WA0016.jpg" alt="Logo" class="logo-flex">
-    <h1>   </h1>
-</header>
-        
-        <nav>
+        <div class="logo">
+            <h2>A2Z <span>MOZAMBIQUE</span></h2>
+            <p>ENGENHARIA DE PRECISÃO</p>
+        </div>
+        <nav id="navMenu">
             <ul>
                 <li><a href="#home">Início</a></li>
-                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#diferenciais">Diferenciais</a></li>
                 <li><a href="#servicos">Serviços</a></li>
                 <li><a href="#projetos">Projetos</a></li>
+                <li><a href="#clientes">Clientes</a></li>
+                <li><a href="#equipa">Equipa</a></li>
                 <li><a href="#galeria">Galeria</a></li>
                 <li><a href="#contacto">Contacto</a></li>
             </ul>
         </nav>
-        <a href="#contacto" class="btn-contact">Orçamento <i class="fas fa-arrow-right"></i></a>
+        <a href="#contacto" class="btn-orcamento">Orçamento <i class="fas fa-arrow-right"></i></a>
+        <div class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </div>
     </div>
 </header>
 
 <main>
-    <!-- Hero Section -->
+    <!-- Hero -->
     <section id="home" class="hero">
-        <div class="container">
-            <h1>Construindo o futuro com excelência</h1>
-            <p>Betoneira móvel com 30 m³/h | Bombeamento até 12 andares | Projetos de grande porte em Moatize</p>
-            <a href="#contacto" class="btn-hero">Solicite uma proposta <i class="fas fa-chevron-right"></i></a>
+        <!-- Substitua o vídeo por um arquivo local ou use uma imagem de fallback -->
+        <video autoplay muted loop playsinline poster="https://picsum.photos/id/104/1920/1080" class="hero-video" loading="lazy">
+            <source src="https://player.vimeo.com/external/434045526.sd.mp4?s=3c4e3cc7f5f0c6f2e2f1e2e0c4e3d5e6&profile_id=164" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content" data-aos="fade-up">
+            <h1>Construindo o futuro com <span>excelência</span></h1>
+            <p>Betoneira móvel 30 m³/h | Bombeamento até 12 andares | Projetos que marcam gerações</p>
+            <div class="hero-buttons">
+                <a href="#contacto" class="btn-primary">Iniciar projeto</a>
+                <a href="#projetos" class="btn-outline">Ver portfólio</a>
+            </div>
         </div>
     </section>
 
-    <!-- Destaques Técnicos (Betoneira, etc) -->
-    <section id="sobre" class="highlights">
+    <!-- Diferenciais -->
+    <section id="diferenciais">
         <div class="container">
-            <h2 class="section-title">Potência e Mobilidade</h2>
-            <div class="grid-highlights">
-                <div class="highlight-card">
-                    <i class="fas fa-truck-mixer"></i>
-                    <h3>Betoneira Móvel</h3>
-                    <p>Produção de <strong>30 m³/h</strong> de betão, totalmente móvel para deslocação rápida no canteiro.</p>
+            <h2 class="section-title">Números que <span>impressionam</span></h2>
+            <div class="stats-grid">
+                <div class="stat-card" data-aos="zoom-in">
+                    <div class="stat-number" data-count="30">0</div>
+                    <div class="stat-label">m³/h de produção</div>
+                    <p>Betão usinado contínuo</p>
                 </div>
-                <div class="highlight-card">
-                    <i class="fas fa-arrow-up"></i>
-                    <h3>Bombeamento até 12 Pisos</h3>
-                    <p>Lança ou bomba estacionária capaz de atingir <strong>12 andares</strong> de altura, ideal para edifícios.</p>
+                <div class="stat-card" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="stat-number" data-count="12">0</div>
+                    <div class="stat-label">Andares de altura</div>
+                    <p>Bombeamento vertical</p>
                 </div>
-                <div class="highlight-card">
-                    <i class="fas fa-gas-pump"></i>
-                    <h3>Energia Diesel</h3>
-                    <p>Operação robusta com motor a diesel, garantindo autonomia e potência em qualquer local.</p>
+                <div class="stat-card" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="stat-number" data-count="200">0</div>
+                    <div class="stat-label">Habitações entregues</div>
+                    <p>Vulcan Village</p>
                 </div>
-                <div class="highlight-card">
-                    <i class="fas fa-cubes"></i>
-                    <h3>Produção de Pavês e Blocos</h3>
-                    <p>Equipa especializada na fabricação de pavimentos intertravados e blocos de alta resistência.</p>
+                <div class="stat-card" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="stat-number" data-count="15">0</div>
+                    <div class="stat-label">Anos de experiência</div>
+                    <p>Excelência comprovada</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Serviços -->
-    <section id="servicos">
+    <section id="servicos" style="background: #080b10;">
         <div class="container">
-            <h2 class="section-title">Nossos Serviços</h2>
+            <h2 class="section-title">Soluções <span>integradas</span></h2>
             <div class="services-grid">
-                <div class="service-card">
-                    <img src="IMG-20260323-WA0085.jpg" alt="Fornecimento de betão">
-                    <h3>Betão Usinado</h3>
-                    <p>Fornecimento e bombeamento de betão com qualidade controlada, inclusive para alturas até 12 pisos.</p>
-                </div>
-                <div class="service-card">
-                    <img src="IMG-20260323-WA0035.jpg" alt="Pavimentação">
-                    <h3>Pavimentação e Blocos</h3>
-                    <p>Fabricação própria de pavês e blocos de concreto, ideal para áreas externas e calçadas.</p>
-                </div>
-                <div class="service-card">
-                    <img src="IMG-20260323-WA0019.jpg" alt="Construção de casas">
-                    <h3>Construção Residencial</h3>
-                    <p>Execução de empreendimentos habitacionais, como as 200 casas do Vulcan Village em Moatize.</p>
-                </div>
-                <div class="service-card">
-                    <img src="IMG-20260323-WA0013.jpg" alt="Obras especiais">
-                    <h3>Monumentos e Infraestruturas</h3>
-                    <p>Construção de monumentos mineiros e obras de arte, com acabamento de excelência.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projetos em destaque -->
-    <section id="projetos" style="background: #f0f2f5;">
-        <div class="container">
-            <h2 class="section-title">Projetos em Execução</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <img src="IMG-20260323-WA0055.jpg" alt="Vulcan Village">
-                    <div class="info">
-                        <h3>Vulcan Village – Moatize</h3>
-                        <p>Construção de <strong>200 habitações</strong> para famílias, com infraestrutura completa e urbanização.</p>
-                        <p><i class="fas fa-map-marker-alt"></i> Moatize, Tete</p>
+                <div class="service-card" data-aos="flip-left">
+                    <div class="service-img"><img src="https://picsum.photos/id/15/800/600" loading="lazy" alt="Betão"></div>
+                    <div class="service-content">
+                        <h3>Betão Usinado</h3>
+                        <p>Produção própria com central móvel de 30m³/h, controle tecnológico e bombeamento em altura.</p>
                     </div>
                 </div>
-                <div class="project-card">
-                    <img src="https://picsum.photos/id/106/400/300" alt="Monumento Mineiro">
-                    <div class="info">
-                        <h3>Monumento Mineiro</h3>
-                        <p>Homenagem à atividade mineira, estrutura em betão aparente com design contemporâneo.</p>
-                        <p><i class="fas fa-hard-hat"></i> Curso de entrada da Vulcan</p>
+                <div class="service-card" data-aos="flip-left" data-aos-delay="100">
+                    <div class="service-img"><img src="https://picsum.photos/id/104/800/600" loading="lazy" alt="Pavimentação"></div>
+                    <div class="service-content">
+                        <h3>Pavimentos & Blocos</h3>
+                        <p>Fabricação de pavês, blocos estruturais e meio-fio com resistência superior.</p>
                     </div>
                 </div>
-                <div class="project-card">
-                    <img src="https://picsum.photos/id/104/400/300" alt="Entrada Pavimentada">
-                    <div class="info">
-                        <h3>Entrada Pavimentada</h3>
-                        <p>Pavimentação da via de acesso principal no curso Vulcan, garantindo segurança e durabilidade.</p>
-                        <p><i class="fas fa-road"></i> Pavimentos em betão e blocos</p>
+                <div class="service-card" data-aos="flip-left" data-aos-delay="200">
+                    <div class="service-img"><img src="https://picsum.photos/id/106/800/600" loading="lazy" alt="Construção"></div>
+                    <div class="service-content">
+                        <h3>Construção Civil</h3>
+                        <p>Execução de empreendimentos residenciais, comerciais e obras de arte em betão aparente.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Galeria de Imagens (9 imagens placeholder) -->
-    <section id="galeria" class="gallery">
+    <!-- Projetos -->
+    <section id="projetos">
         <div class="container">
-            <h2 class="section-title">Galeria de Obras</h2>
-            <div class="gallery-grid">
-                <!-- 9 imagens placeholder; você pode substituir pelos seus arquivos -->
-                <div class="gallery-item"><img src="IMG-20260323-WA0011.jpg" alt="Betoneira em ação"></div>
-                <div class="gallery-item"><img src="IMG-20260323-WA0028.jpg" alt="Bombeamento de betão"></div>
-                <div class="gallery-item"><img src="IMG-20260323-WA0019.jpg" alt="Produção de blocos"></div>
-                <div class="gallery-item"><img src="IMG-20260323-WA0027.jpg" alt="Pavimentação"></div>
-                <div class="gallery-item"><img src="IMG-20260323-WA0055.jpg" alt="Frente de obra Vulcan Village"></div>
-                <div class="gallery-item"><img src="IMG-20260323-WA0031.jpg" alt="Construção de casas"></div>
-                <div class="gallery-item"><img src="IMG-20260323-WA0035.jpg" alt="Equipamentos e frota"></div>
-                <div class="gallery-item"><img src="IMG-20260323-WA0040.jpg" alt="Monumento mineiro"></div>
-                <div class="gallery-item"><img src="IMG-20260323-WA0043.jpg" alt="Entrada Vulcan pavimentada"></div>
-            <!-- </div>
-            <p style="text-align: center; margin-top: 20px; font-style: italic;">*Imagens ilustrativas – substitua pelas fotos reais dos seus projetos.</p>
-        </div> -->
+            <h2 class="section-title">Projetos em <span>destaque</span></h2>
+            <div class="swiper projects-carousel" data-aos="fade-up">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src="https://picsum.photos/id/1/800/600" loading="lazy" alt="Vulcan Village">
+                        <div class="project-info">
+                            <h3>Vulcan Village</h3>
+                            <p>200 habitações populares em Moatize com infraestrutura completa.</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://picsum.photos/id/106/800/600" loading="lazy" alt="Monumento Mineiro">
+                        <div class="project-info">
+                            <h3>Monumento Mineiro</h3>
+                            <p>Estrutura em betão armado, homenagem à história da mineração.</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://picsum.photos/id/104/800/600" loading="lazy" alt="Pavimentação Principal">
+                        <div class="project-info">
+                            <h3>Pavimentação Acesso Vulcan</h3>
+                            <p>2 km de via com blocos intertravados e drenagem.</p>
+                        </div>
+                    </div>
+                    <!-- Adicione mais slides conforme necessário -->
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
     </section>
 
-                <!-- Galeria de Imagens (9 imagens placeholder) -->
-    <section id="galeria" class="gallery">
+    <!-- Clientes -->
+    <section id="clientes" class="clients-carousel">
         <div class="container">
-            <h2 class="section-title">Principais Clientes</h2>
-            <div class="gallery-grid">
-                <!-- 9 imagens placeholder; você pode substituir pelos seus arquivos -->
-                <div class="gallery-item"><img src="Vulcan-e1674576858237.png" alt="Betoneira em ação"></div>
-                <div class="gallery-item"><img src="Vulcan-e1674576858237.png" alt="Bombeamento de betão"></div>
-                <div class="gallery-item"><img src="IMG-20260323-WA0019.jpg" alt="Produção de blocos"></div>
-                <div class="gallery-item"><img src="IMG-20260323-WA0027.jpg" alt="Pavimentação"></div>
-                <div class="gallery-item"><img src="IMG-20260323-WA0055.jpg" alt="Frente de obra Vulcan Village"></div>
-                <div class="gallery-item"><img src="IMG-20260323-WA0031.jpg" alt="Construção de casas"></div>
-                <div class="gallery-item"><img src="IMG-20260323-WA0035.jpg" alt="Equipamentos e frota"></div>
-                <div class="gallery-item"><img src="IMG-20260323-WA0040.jpg" alt="Monumento mineiro"></div>
-                <div class="gallery-item"><img src="IMG-20260323-WA0043.jpg" alt="Entrada Vulcan pavimentada"></div>
-            <!-- </div>
-            <p style="text-align: center; margin-top: 20px; font-style: italic;">*Imagens ilustrativas – substitua pelas fotos reais dos seus projetos.</p>
-        </div> -->
+            <h2 class="section-title">Clientes que <span>confiam</span></h2>
+            <div class="swiper clients-slider" data-aos="fade-up">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img src="https://via.placeholder.com/180x80?text=Logo+1" loading="lazy" alt="Cliente 1"></div>
+                    <div class="swiper-slide"><img src="https://via.placeholder.com/180x80?text=Logo+2" loading="lazy" alt="Cliente 2"></div>
+                    <div class="swiper-slide"><img src="https://via.placeholder.com/180x80?text=Logo+3" loading="lazy" alt="Cliente 3"></div>
+                    <div class="swiper-slide"><img src="https://via.placeholder.com/180x80?text=Logo+4" loading="lazy" alt="Cliente 4"></div>
+                    <div class="swiper-slide"><img src="https://via.placeholder.com/180x80?text=Logo+5" loading="lazy" alt="Cliente 5"></div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
     </section>
 
-    <!-- Contacto / informação -->
+    <!-- Nova seção: Equipa -->
+    <section id="equipa">
+        <div class="container team-section">
+            <h2 class="section-title">Nossa <span>Equipa</span></h2>
+            <p class="section-subtitle">Profissionais comprometidos com a excelência e a inovação.</p>
+            <img src="https://picsum.photos/id/20/1200/600" alt="Equipa A2Z" class="team-image" loading="lazy" data-aos="zoom-in">
+            <p style="margin-top: 20px; font-style: italic; color: #aaa;">Equipa técnica e de gestão – união que constrói resultados sólidos.</p>
+        </div>
+    </section>
+
+    <!-- Galeria -->
+    <section id="galeria" style="background: #080b10;">
+        <div class="container">
+            <h2 class="section-title">Registros <span>da obra</span></h2>
+            <div class="gallery-grid">
+                <a href="https://picsum.photos/id/101/1200/800" data-lightbox="galeria" class="gallery-item"><img src="https://picsum.photos/id/101/400/300" loading="lazy" alt="obra1"><div class="gallery-overlay"><i class="fas fa-search-plus fa-2x"></i></div></a>
+                <a href="https://picsum.photos/id/102/1200/800" data-lightbox="galeria" class="gallery-item"><img src="https://picsum.photos/id/102/400/300" loading="lazy" alt="obra2"><div class="gallery-overlay"><i class="fas fa-search-plus fa-2x"></i></div></a>
+                <a href="https://picsum.photos/id/103/1200/800" data-lightbox="galeria" class="gallery-item"><img src="https://picsum.photos/id/103/400/300" loading="lazy" alt="obra3"><div class="gallery-overlay"><i class="fas fa-search-plus fa-2x"></i></div></a>
+                <a href="https://picsum.photos/id/104/1200/800" data-lightbox="galeria" class="gallery-item"><img src="https://picsum.photos/id/104/400/300" loading="lazy" alt="obra4"><div class="gallery-overlay"><i class="fas fa-search-plus fa-2x"></i></div></a>
+                <a href="https://picsum.photos/id/105/1200/800" data-lightbox="galeria" class="gallery-item"><img src="https://picsum.photos/id/105/400/300" loading="lazy" alt="obra5"><div class="gallery-overlay"><i class="fas fa-search-plus fa-2x"></i></div></a>
+                <a href="https://picsum.photos/id/106/1200/800" data-lightbox="galeria" class="gallery-item"><img src="https://picsum.photos/id/106/400/300" loading="lazy" alt="obra6"><div class="gallery-overlay"><i class="fas fa-search-plus fa-2x"></i></div></a>
+                <!-- Adicione mais imagens aqui -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto -->
     <section id="contacto">
         <div class="container">
-            <h2 class="section-title">Fale Connosco</h2>
-            <div style="display: flex; flex-wrap: wrap; gap: 40px; justify-content: center;">
-                <div style="flex:1; min-width: 250px;">
-                    <h3><i class="fas fa-phone-alt"></i> Telefone</h3>
-                    <p>+258 876024869</p>
-                    <h3><i class="fas fa-envelope"></i> Email</h3>
-                    <p>admin@a2z.co.mz</p>
-                    <h3><i class="fas fa-map-marker-alt"></i> Localização</h3>
-                    <p>EN007 - Bairro Chingodzi , Moatize – Moçambique</p>
+            <div class="contact-premium" data-aos="zoom-in">
+                <div class="contact-info">
+                    <h3>Vamos <span style="color: var(--gold);">erguer</span> o seu projeto</h3>
+                    <p>Entre em contacto com a nossa equipa técnica e solicite um orçamento detalhado sem compromisso.</p>
+                    <div class="contact-detail"><i class="fas fa-phone-alt"></i> +258 84 123 4567</div>
+                    <div class="contact-detail"><i class="fab fa-whatsapp"></i> +258 82 987 6543</div>
+                    <div class="contact-detail"><i class="fas fa-envelope"></i> a2z@engenharia.co.mz</div>
+                    <div class="contact-detail"><i class="fas fa-map-marker-alt"></i> Curso Vulcan, Moatize – Moçambique</div>
                 </div>
-                <div style="flex:2; min-width: 280px;">
+                <div class="contact-form">
                     <form action="#" method="post">
-                        <input type="text" placeholder="Seu nome" style="width:100%; padding:12px; margin-bottom:12px; border:1px solid #ccc; border-radius:8px;">
-                        <input type="email" placeholder="Email" style="width:100%; padding:12px; margin-bottom:12px; border:1px solid #ccc; border-radius:8px;">
-                        <textarea rows="4" placeholder="Mensagem" style="width:100%; padding:12px; margin-bottom:12px; border:1px solid #ccc; border-radius:8px;"></textarea>
-                        <button type="submit" style="background: var(--primary); color:white; border:none; padding:12px 25px; border-radius:30px; font-weight:bold;">Enviar mensagem</button>
+                        <input type="text" placeholder="Nome completo">
+                        <input type="email" placeholder="E-mail">
+                        <input type="tel" placeholder="Telefone">
+                        <textarea rows="4" placeholder="Detalhes do projeto..."></textarea>
+                        <button type="submit" class="btn-primary" style="width: 100%; text-align: center;">Enviar mensagem</button>
                     </form>
                 </div>
             </div>
@@ -484,44 +764,163 @@
     </section>
 </main>
 
+<button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
+
 <footer>
     <div class="container">
-        <div class="footer-content">
-            <div class="footer-col">
-                <h4>Vulcan Construções</h4>
-                <p>Especialistas em betão, pavimentos e construções de médio e grande porte. Compromisso com prazos e qualidade.</p>
+        <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 2rem;">
+            <div>
+                <h3 style="color: var(--gold);">A2Z MOZAMBIQUE</h3>
+                <p>Excelência em engenharia e construção civil.</p>
             </div>
-            <div class="footer-col">
-                <h4>Serviços</h4>
-                <p><i class="fas fa-check"></i> Betão usinado 30 m³/h</p>
-                <p><i class="fas fa-check"></i> Bombeamento até 12 pisos</p>
-                <p><i class="fas fa-check"></i> Pavês e blocos</p>
-                <p><i class="fas fa-check"></i> Construção civil</p>
+            <div>
+                <h4>Links Rápidos</h4>
+                <p><a href="#home" style="color: #ccc;">Início</a></p>
+                <p><a href="#servicos" style="color: #ccc;">Serviços</a></p>
+                <p><a href="#projetos" style="color: #ccc;">Projetos</a></p>
             </div>
-            <div class="footer-col">
-                <h4>Contacto rápido</h4>
-                <p><i class="fas fa-phone"></i> +258 876024869</p>
-                <p><i class="fas fa-envelope"></i> admin@a2z.co.mz</p>
-                <p><i class="fas fa-clock"></i> Seg-Sex: 7h – 17h</p>
+            <div>
+                <h4>Redes Sociais</h4>
+                <p><i class="fab fa-facebook"></i> /a2zmocambique</p>
+                <p><i class="fab fa-instagram"></i> @a2z.construcoes</p>
             </div>
         </div>
-        <div class="copyright">
-            &copy; 2026 A2Z Construções – Todos os direitos reservados. | Desenvolvido para Moatize
+        <div style="text-align: center; margin-top: 3rem; border-top: 1px solid #222; padding-top: 1.5rem;">
+            &copy; 2025 A2Z MOZAMBIQUE – Todos os direitos reservados.
         </div>
     </div>
 </footer>
 
-<!-- Pequeno script para rolagem suave -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
 <script>
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({ behavior: 'smooth' });
-            }
-        });
+    // Preloader
+    window.addEventListener('load', () => {
+        const preloader = document.querySelector('.preloader');
+        if (preloader) {
+            preloader.classList.add('fade-out');
+            setTimeout(() => preloader.remove(), 800);
+        }
     });
+
+    AOS.init({ duration: 1000, once: true, offset: 100 });
+
+    // Header scroll
+    window.addEventListener('scroll', () => {
+        const header = document.getElementById('header');
+        if (window.scrollY > 50) header.classList.add('scrolled');
+        else header.classList.remove('scrolled');
+    });
+
+    // Menu mobile
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+    if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', () => navMenu.classList.toggle('active'));
+        document.querySelectorAll('#navMenu a').forEach(link => link.addEventListener('click', () => navMenu.classList.remove('active')));
+    }
+
+    // Projects carousel
+    new Swiper('.projects-carousel', {
+        loop: true,
+        effect: 'coverflow',
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: 'auto',
+        coverflowEffect: {
+            rotate: 30,
+            stretch: 0,
+            depth: 100,
+            modifier: 1,
+            slideShadows: true,
+        },
+        pagination: { el: '.swiper-pagination', clickable: true },
+        navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+        breakpoints: {
+            640: { slidesPerView: 1 },
+            1024: { slidesPerView: 2 }
+        }
+    });
+
+    // Clients carousel
+    new Swiper('.clients-slider', {
+        loop: true,
+        slidesPerView: 2,
+        spaceBetween: 30,
+        autoplay: { delay: 2000, disableOnInteraction: false },
+        breakpoints: {
+            640: { slidesPerView: 3 },
+            1024: { slidesPerView: 5 }
+        },
+        pagination: { el: '.swiper-pagination', clickable: true }
+    });
+
+    // Counters
+    const counters = document.querySelectorAll('.stat-number');
+    const speed = 150;
+    const animateNumbers = () => {
+        counters.forEach(counter => {
+            const updateCount = () => {
+                const target = +counter.getAttribute('data-count');
+                const count = +counter.innerText;
+                const inc = target / speed;
+                if (count < target) {
+                    counter.innerText = Math.ceil(count + inc);
+                    setTimeout(updateCount, 20);
+                } else {
+                    counter.innerText = target;
+                }
+            };
+            updateCount();
+        });
+    };
+    const statsSection = document.querySelector('#diferenciais');
+    if (statsSection) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateNumbers();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        observer.observe(statsSection);
+    }
+
+    // Back to top button
+    const backBtn = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) backBtn.classList.add('visible');
+        else backBtn.classList.remove('visible');
+    });
+    backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Custom cursor
+    const cursorDot = document.querySelector('.cursor-dot');
+    const cursorOutline = document.querySelector('.cursor-dot-outline');
+    if (cursorDot && cursorOutline) {
+        window.addEventListener('mousemove', (e) => {
+            cursorDot.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+            cursorOutline.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+        });
+        document.querySelectorAll('a, button, .btn-primary, .btn-outline').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursorOutline.style.width = '52px';
+                cursorOutline.style.height = '52px';
+                cursorOutline.style.backgroundColor = 'rgba(196,30,58,0.3)';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursorOutline.style.width = '32px';
+                cursorOutline.style.height = '32px';
+                cursorOutline.style.backgroundColor = 'rgba(196,30,58,0.2)';
+            });
+        });
+    }
+
+    lightbox.option({ resizeDuration: 200, wrapAround: true });
 </script>
 </body>
 </html>
