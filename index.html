@@ -143,7 +143,7 @@
             letter-spacing: 2px;
             color: var(--gold); */
 
-.logo {
+/* .logo {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -155,7 +155,7 @@
     max-width: 180px;
     object-fit: contain;   /* mantém proporção sem distorção */
     /* Se a imagem ainda tiver fundo branco, remova com: */
-    /* background-color: transparent; (mas o ideal é usar PNG transparente) */
+    background-color: transparent;
 }
 
 @media (max-width: 768px) {
@@ -164,6 +164,60 @@
     }
     .logo p {
         font-size: 0.7rem;
+    }
+} */
+
+
+        .header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;      /* impede quebra de linha em desktop */
+    gap: 20px;
+}
+
+.logo {
+    flex-shrink: 0;         /* impede que o logo encolha demais, mas respeita largura máxima */
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 280px;       /* limite de largura total (imagem + texto) */
+}
+
+.logo-img {
+    height: 50px;
+    width: auto;
+    max-width: 180px;       /* largura máxima da imagem */
+    object-fit: contain;
+}
+
+.logo p {
+    font-size: 0.75rem;
+    white-space: nowrap;    /* evita quebra do texto em várias linhas */
+}
+
+nav {
+    flex: 1;                /* permite que o menu ocupe o espaço disponível */
+    text-align: right;
+}
+
+nav ul {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1.5rem;
+}
+
+/* Para telas menores que 992px, mantém o comportamento responsivo com menu hambúrguer */
+@media (max-width: 992px) {
+    .header-flex {
+        flex-wrap: wrap;
+    }
+    nav {
+        flex: auto;
+        text-align: left;
+    }
+    .logo p {
+        white-space: normal; /* permite quebra em mobile se necessário */
     }
 }
 
