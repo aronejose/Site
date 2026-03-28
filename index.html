@@ -129,7 +129,7 @@
             justify-content: space-between;
             align-items: center;
         }
-        .logo h2 {
+        /* .logo h2 {
             font-size: 1.8rem;
             font-weight: 800;
             color: #fff;
@@ -141,7 +141,35 @@
         .logo p {
             font-size: 0.7rem;
             letter-spacing: 2px;
-            color: var(--gold);
+            color: var(--gold); */
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-img {
+    height: 50px;          /* altura desejada */
+    width: auto;
+    max-width: 180px;
+    object-fit: contain;   /* mantém proporção sem distorção */
+    /* Se a imagem ainda tiver fundo branco, remova com: */
+    /* background-color: transparent; (mas o ideal é usar PNG transparente) */
+}
+
+@media (max-width: 768px) {
+    .logo-img {
+        height: 40px;
+    }
+    .logo p {
+        font-size: 0.7rem;
+    }
+}
+
+
+
+            
         }
         nav ul {
             display: flex;
@@ -572,10 +600,16 @@
 
 <header id="header">
     <div class="container header-flex">
-    <div class="logo">
-    <h2>A2Z <span>MOZAMBIQUE</span></h2>
+
+<div class="logo">
+    <img src="IMG-20260325-WA0016.jpg" alt="A2Z Moçambique" class="logo-img">
     <p>ENGENHARIA DE PRECISÃO</p>
 </div>
+        
+    <!-- <div class="logo">
+    <h2>A2Z <span>MOZAMBIQUE</span></h2>
+    <p>ENGENHARIA DE PRECISÃO</p>
+</div> -->
         <nav id="navMenu">
             <ul>
                 <li><a href="#home">Início</a></li>
